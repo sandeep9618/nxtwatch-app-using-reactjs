@@ -1,7 +1,10 @@
+import {Redirect} from 'react-router-dom'
 import {Component} from 'react'
+import Cookies from 'js-cookie'
+import NxtWatchContext from '../NxtWatchContext'
 
 import {
-  MediumDevicesContainer,
+  LoginBgContainer,
   LoginContainer,
   WebSiteLogo,
   WebSiteLogoContainer,
@@ -19,7 +22,7 @@ class Login extends Component {
     userNameInput: '',
     userPassInput: '',
     showPassword: false,
-    isHavingErroOnLoginReq: false,
+    isHavingErrorLoginDetails: false,
     errorMsg: '',
   }
 
@@ -46,11 +49,16 @@ class Login extends Component {
     const options = {method: 'POST', body: JSON.stringify(loginDetails)}
     const response = await fetch(url, options)
     if (response.ok === true) {
-      this.setState({isHavingErroOnLoginReq: false})
+      const jsonData = response.json()
+      const jwtToken = jsonData.jwt_token
+      const {history} = this.props
+      history.replace('/')
+      Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
+      this.setState({isHavingErrorLoginDetails: false})
     } else {
       const jsonData = await response.json()
       const errorMsg = jsonData.error_msg
-      this.setState({isHavingErroOnLoginReq: true, errorMsg})
+      this.setState({isHavingErrorLoginDetails: true, errorMsg})
     }
   }
 
@@ -59,50 +67,86 @@ class Login extends Component {
       userNameInput,
       userPassInput,
       showPassword,
-      isHavingErroOnLoginReq,
+      isHavingErrorLoginDetails,
       errorMsg,
     } = this.state
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken !== undefined) {
+      return <Redirect to="/" />
+    }
     return (
-      <MediumDevicesContainer>
-        <LoginContainer onSubmit={this.onClickToLogin}>
-          <WebSiteLogoContainer>
-            <WebSiteLogo
-              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-              alt="website logo"
-            />
-          </WebSiteLogoContainer>
+      <NxtWatchContext.Consumer>
+        {value => {
+          const {isDarkThemeActivated} = value
+          const NxtWatchLogoImgUrl = isDarkThemeActivated
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
+          return (
+            <LoginBgContainer isDarkThemeActivated={isDarkThemeActivated}>
+              <LoginContainer
+                onSubmit={this.onClickToLogin}
+                isDarkThemeActivated={isDarkThemeActivated}
+              >
+                <WebSiteLogoContainer>
+                  <WebSiteLogo src={NxtWatchLogoImgUrl} alt="website logo" />
+                </WebSiteLogoContainer>
 
-          <Label htmlFor="username">USERNAME</Label>
-          <Input
-            id="username"
-            type="text"
-            placeholder="Username"
-            value={userNameInput}
-            onChange={this.onChangeUserName}
-          />
+                <Label
+                  htmlFor="username"
+                  isDarkThemeActivated={isDarkThemeActivated}
+                >
+                  USERNAME
+                </Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Username"
+                  value={userNameInput}
+                  onChange={this.onChangeUserName}
+                  isDarkThemeActivated={isDarkThemeActivated}
+                />
 
-          <Label htmlFor="password">PASSWORD</Label>
-          <Input
-            id="password"
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Password"
-            value={userPassInput}
-            onChange={this.onChangePassword}
-          />
-          <ShowPasswordContainer>
-            <CheckBox
-              type="checkbox"
-              id="showPassword"
-              onChange={this.onChangeShowPasswordStatus}
-            />
-            <ShowPasswordLabel htmlFor="showPassword">
-              Show Password
-            </ShowPasswordLabel>
-          </ShowPasswordContainer>
-          <LoginButton type="submit">Login</LoginButton>
-          {isHavingErroOnLoginReq && <ErrorLoginMsg>{errorMsg}</ErrorLoginMsg>}
-        </LoginContainer>
-      </MediumDevicesContainer>
+                <Label
+                  htmlFor="password"
+                  isDarkThemeActivated={isDarkThemeActivated}
+                >
+                  PASSWORD
+                </Label>
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  value={userPassInput}
+                  onChange={this.onChangePassword}
+                  isDarkThemeActivated={isDarkThemeActivated}
+                />
+                <ShowPasswordContainer>
+                  <CheckBox
+                    type="checkbox"
+                    id="showPassword"
+                    onChange={this.onChangeShowPasswordStatus}
+                  />
+                  <ShowPasswordLabel
+                    htmlFor="showPassword"
+                    isDarkThemeActivated={isDarkThemeActivated}
+                  >
+                    Show Password
+                  </ShowPasswordLabel>
+                </ShowPasswordContainer>
+                <LoginButton
+                  type="submit"
+                  isDarkThemeActivated={isDarkThemeActivated}
+                >
+                  Login
+                </LoginButton>
+                {isHavingErrorLoginDetails && (
+                  <ErrorLoginMsg>{errorMsg}</ErrorLoginMsg>
+                )}
+              </LoginContainer>
+            </LoginBgContainer>
+          )
+        }}
+      </NxtWatchContext.Consumer>
     )
   }
 }

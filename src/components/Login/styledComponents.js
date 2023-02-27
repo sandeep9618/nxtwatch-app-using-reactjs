@@ -1,20 +1,31 @@
 import styled from 'styled-components'
 
-export const MediumDevicesContainer = styled.div`
+export const LoginBgContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: ${props =>
+    props.isDarkThemeActivated ? '#212121' : '#ffffff'};
 `
 export const LoginContainer = styled.form`
   padding: 2%;
   min-height: 63vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 0px 30px 2px #e2e8f0;
+  box-shadow: ${props =>
+    props.isDarkThemeActivated ? 'black' : '0px 0px 30px 2px #e2e8f0'};
   border-radius: 8px;
   width: 30%;
+  background-color: ${props =>
+    props.isDarkThemeActivated ? '#000000' : '#ffffff'};
+  @media screen and (max-width: 576px) {
+    width: 90%;
+    min-height: 45vh;
+    padding-top: 28px;
+    padding: 20px;
+  }
 `
 
 export const WebSiteLogo = styled.img`
@@ -29,15 +40,19 @@ export const WebSiteLogoContainer = styled.div`
 export const Label = styled.label`
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
-  margin-top: 30px;
+  color: ${props => (props.isDarkThemeActivated ? '#f1f5f9' : ' #64748b')};
+  margin-top: 40px;
 `
 export const Input = styled.input`
-  border: 1px solid #94a3b8;
+  border: 2px solid
+    ${props => (props.isDarkThemeActivated ? '#424242' : '#94a3b8')};
   padding: 8px;
   border-radius: 5px;
   margin-top: 10px;
   outline: none;
+  color: ${props => (props.isDarkThemeActivated ? '#f1f5f9' : ' #000000')};
+  font-family: Roboto;
+  background-color: transparent;
 `
 export const ShowPasswordContainer = styled.div`
   display: flex;
@@ -47,14 +62,17 @@ export const ShowPasswordContainer = styled.div`
   margin-top: 8px;
 `
 
-export const CheckBox = styled.input``
+export const CheckBox = styled.input`
+  cursor: pointer;
+  outline: none;
+`
 
 export const ShowPasswordLabel = styled.label`
   font-size: 12px;
+  color: ${props => (props.isDarkThemeActivated ? '#f1f5f9' : ' #000000')};
 `
 export const LoginButton = styled.button`
   color: white;
-  background-color: red;
   padding: 8px;
   width: 100%;
   cursor: pointer;
@@ -62,6 +80,8 @@ export const LoginButton = styled.button`
   border-radius: 5px;
   margin-top: 25px;
   margin-bottom: 5px;
+  outline: none;
+  background-color: ${props => (props.isDarkThemeActivated ? 'blue' : 'red')};
 `
 export const ErrorLoginMsg = styled.p`
   color: red;
