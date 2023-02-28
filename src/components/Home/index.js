@@ -1,7 +1,10 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
+import {AiOutlineClose} from 'react-icons/ai'
+import {BiSearch} from 'react-icons/bi'
 import Cookies from 'js-cookie'
 import Header from '../Header'
+import HomeVideoItem from '../HomeVideoItem'
 
 import {
   HomeBgContainer,
@@ -11,13 +14,19 @@ import {
   HomeContainer,
   LoaderContainer,
   VideosAndBannerContainer,
+  VideosContainer,
+  BannerDetails,
+  CloseButton,
+  InputContainer,
+  SearchInput,
+  SearchButton,
 } from './styledComponents'
 import {NxtWatchLogo} from '../Header/styledComponents'
 import NavBar from '../NavBar'
 import NxtWatchContext from '../NxtWatchContext'
 
 class Home extends Component {
-  state = {videosArray: [], fetchingState: 'loading'}
+  state = {videosArray: [], fetchingState: 'loading', isShowPrimeDetails: true}
 
   componentDidMount() {
     this.getVideoDetails()
@@ -42,7 +51,7 @@ class Home extends Component {
         title: i.title,
         viewCount: i.view_count,
       }))
-      this.setState({videosArray: updateData, fetchingState: 'loading'})
+      this.setState({videosArray: updateData, fetchingState: 'success'})
     }
   }
 
@@ -57,16 +66,34 @@ class Home extends Component {
     </LoaderContainer>
   )
 
+  renderVideos = () => {
+    const {videosArray} = this.state
+    return (
+      <VideosContainer>
+        {videosArray.map(eachItem => (
+          <HomeVideoItem eachItem={eachItem} key={eachItem.id} />
+        ))}
+      </VideosContainer>
+    )
+  }
+
   renderVideosStateWise = isDarkThemeActivated => {
     const {fetchingState} = this.state
     if (fetchingState === 'loading') {
       return this.renderLoadingItem(isDarkThemeActivated)
     }
+    if (fetchingState === 'success') {
+      return this.renderVideos()
+    }
     return null
   }
 
+  onClickToClosePrimeDetails = () => {
+    this.setState({isShowPrimeDetails: false})
+  }
+
   render() {
-    const {videosArray} = this.state
+    const {isShowPrimeDetails} = this.state
     return (
       <NxtWatchContext.Consumer>
         {value => {
@@ -76,17 +103,44 @@ class Home extends Component {
               <Header />
               <HomeContainer>
                 <NavBar />
-                <VideosAndBannerContainer>
-                  <BannerContainer>
-                    <NxtWatchLogo
-                      src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                      alt="nxt watch logo"
-                    />
-                    <BannerText>
-                      Buy Nxt Watch Premium prepaid plans with UPI
-                    </BannerText>
-                    <GetItNowButton>GET IT NOW</GetItNowButton>
+                <VideosAndBannerContainer
+                  isDarkThemeActivated={isDarkThemeActivated}
+                >
+                  <BannerContainer
+                    data-testid="banner"
+                    isShowPrimeDetails={isShowPrimeDetails}
+                  >
+                    <BannerDetails>
+                      <NxtWatchLogo
+                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                        alt="nxt watch logo"
+                      />
+                      <BannerText>
+                        Buy Nxt Watch Premium prepaid plans with UPI
+                      </BannerText>
+                      <GetItNowButton>GET IT NOW</GetItNowButton>
+                    </BannerDetails>
+                    <CloseButton
+                      type="button"
+                      data-testid="close"
+                      onClick={this.onClickToClosePrimeDetails}
+                    >
+                      <AiOutlineClose size={15} />
+                    </CloseButton>
                   </BannerContainer>
+                  <InputContainer>
+                    <SearchInput
+                      type="text"
+                      placeholder="Search"
+                      isDarkThemeActivated={isDarkThemeActivated}
+                    />
+                    <SearchButton
+                      type="button"
+                      isDarkThemeActivated={isDarkThemeActivated}
+                    >
+                      <BiSearch size={15} />
+                    </SearchButton>
+                  </InputContainer>
                   {this.renderVideosStateWise(isDarkThemeActivated)}
                 </VideosAndBannerContainer>
               </HomeContainer>

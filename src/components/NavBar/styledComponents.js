@@ -32,7 +32,7 @@ export const NavOptionText = styled.p`
 const backgroudColorOfActiveOption = obj => {
   const {isDarkThemeActivated, isActiveOption} = obj
   if (isDarkThemeActivated && isActiveOption) {
-    return '#606060'
+    return '#383838'
   }
   if (isDarkThemeActivated && !isActiveOption) {
     return '#231f20'
@@ -69,8 +69,8 @@ export const ContactUsContainer = styled.div`
 `
 
 export const ContactUsHeading = styled.h1`
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 700;
   color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
 `
 export const ContactUsDescription = styled.p`

@@ -39,7 +39,11 @@ const Header = () => (
             <NxtWatchLogo src={nxtWatchLogoImgUrl} alt="website logo" />
           </NxtWatchButton>
           <LogoutAndThemeContainer>
-            <ThemeButton type="button" onClick={changeTheme}>
+            <ThemeButton
+              type="button"
+              onClick={changeTheme}
+              data-testid="theme"
+            >
               {isDarkThemeActivated ? (
                 <BsSun size={30} color="#ffffff" />
               ) : (
