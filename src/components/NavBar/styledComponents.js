@@ -3,11 +3,14 @@ import styled from 'styled-components'
 export const NavBarBgContainer = styled.div`
   width: 20%;
   padding: 2%;
-  padding-top: 0px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 90vh;
+  margin-top: 0px;
+  background-color: ${props =>
+    props.isDarkThemeActivated ? '#231f20' : '#ffffff'};
 `
 export const NavOptions = styled.ul`
   padding-left: 0px;
@@ -24,13 +27,41 @@ export const NavOptionText = styled.p`
   font-size: 16px;
   font-weight: 700;
   margin-left: 20px;
+  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
 `
+const backgroudColorOfActiveOption = obj => {
+  const {isDarkThemeActivated, isActiveOption} = obj
+  if (isDarkThemeActivated && isActiveOption) {
+    return '#606060'
+  }
+  if (isDarkThemeActivated && !isActiveOption) {
+    return '#231f20'
+  }
+  if (!isDarkThemeActivated && isActiveOption) {
+    return '#f1f5f9'
+  }
+  return 'transparent'
+}
+
 export const NavButton = styled.button`
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   height: 42px;
+  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  width: 90%;
+  border-radius: 6px;
+  background-color: ${props =>
+    backgroudColorOfActiveOption({
+      isDarkThemeActivated: props.isDarkThemeActivated,
+      isActiveOption: props.isActiveOption,
+    })};
 `
 export const ContactUsContainer = styled.div`
   display: flex;
@@ -40,4 +71,17 @@ export const ContactUsContainer = styled.div`
 export const ContactUsHeading = styled.h1`
   font-size: 17px;
   font-weight: 500;
+  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
+`
+export const ContactUsDescription = styled.p`
+  font-size: 13px;
+  font-weight: 500;
+  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
+`
+export const SocialMediaIconsContainer = styled.div`
+  display: flex;
+`
+export const SocialMediaIcon = styled.img`
+  height: 30px;
+  margin-right: 10px;
 `

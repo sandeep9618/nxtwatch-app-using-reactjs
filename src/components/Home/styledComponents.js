@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 
+export const VideosAndBannerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 export const BannerContainer = styled.div`
   background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
   background-size: cover;
-  width: 70%;
+  width: 1000px;
   height: 200px;
+  padding: 3%;
 `
 export const HomeBgContainer = styled.div`
   height: 100vh;
@@ -24,5 +29,12 @@ export const GetItNowButton = styled.button`
 `
 export const HomeContainer = styled.div`
   display: flex;
+  min-height: 80vh;
   width: 100%;
+`
+export const LoaderContainer = styled.div`
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

@@ -49,7 +49,7 @@ class Login extends Component {
     const options = {method: 'POST', body: JSON.stringify(loginDetails)}
     const response = await fetch(url, options)
     if (response.ok === true) {
-      const jsonData = response.json()
+      const jsonData = await response.json()
       const jwtToken = jsonData.jwt_token
       const {history} = this.props
       history.replace('/')

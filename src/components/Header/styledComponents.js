@@ -6,7 +6,7 @@ export const HeaderBgContainer = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${props =>
-    props.isDarkThemeActivated ? ' #000000' : '#ffffff'};
+    props.isDarkThemeActivated ? '#231f20' : '#ffffff'};
 `
 export const NxtWatchLogo = styled.img`
   height: 35px;
