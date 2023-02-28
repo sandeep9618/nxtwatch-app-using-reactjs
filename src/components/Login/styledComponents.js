@@ -72,7 +72,7 @@ export const ShowPasswordLabel = styled.label`
   color: ${props => (props.isDarkThemeActivated ? '#f1f5f9' : ' #000000')};
 `
 export const LoginButton = styled.button`
-  color: white;
+  color: #ffffff;
   padding: 8px;
   width: 100%;
   cursor: pointer;

@@ -4,25 +4,32 @@ export const HeaderBgContainer = styled.div`
   height: 10vh;
   width: 100%;
   display: flex;
-  padding: 2%;
   justify-content: space-between;
+  background-color: ${props =>
+    props.isDarkThemeActivated ? ' #000000' : '#ffffff'};
 `
 export const NxtWatchLogo = styled.img`
   height: 35px;
+  margin-top: 0px;
 `
 export const NxtWatchButton = styled.button`
   background-color: transparent;
   border: 0px;
   text-decoration: none;
-  min-height: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  margin-top: 15px;
+  margin-left: 15px;
+  @media screen and (max-width: 576px) {
+    margin-top: 25px;
+  }
 `
 
 export const ProfileImg = styled.img`
   height: 28px;
+  cursor: pointer;
 `
 export const LogoutAndThemeContainer = styled.div`
   display: flex;
@@ -40,21 +47,18 @@ export const ThemeButton = styled.button`
   flex-direction: column;
   justify-content: center;
   margin-right: 15px;
+  margin-top: 0px;
 `
 export const LogOutButton = styled.button`
   background-color: transparent;
-  border: 2px solid black;
-  display: flex;
-  color: black;
+  border: 2px solid
+    ${props => (props.isDarkThemeActivated ? '#ffffff' : 'blue')};
+  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : 'blue')};
   border-radius: 5px;
-  flex-direction: column;
-  align-items: center;
   cursor: pointer;
   height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   margin-left: 15px;
+  margin-right: 20px;
 `
 export const LogoutPopUpContainer = styled.div`
   height: 25vh;
@@ -63,9 +67,12 @@ export const LogoutPopUpContainer = styled.div`
   padding: 3%;
   text-align: center;
   border-radius: 12px;
+  @media screen and (max-width: 576px) {
+    margin-top: 0px;
+  }
 `
 export const LogOutText = styled.p`
-  color: white;
+  color: #ffffff;
 `
 
 export const CancelButton = styled.button`
@@ -90,4 +97,23 @@ export const ConfirmButton = styled.button`
   width: 45%;
   margin-left: 10px;
   margin-top: 20px;
+`
+export const SettingsButton = styled.button`
+  display: none;
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+  @media screen and (max-width: 576px) {
+    display: block;
+  }
+`
+
+export const ProfileImgButton = styled.button`
+  display: none;
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+  @media screen and (min-width: 577px) {
+    display: block;
+  }
 `

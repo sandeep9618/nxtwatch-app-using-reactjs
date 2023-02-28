@@ -1,0 +1,19 @@
+.active-button {
+  background-color: #f1f5f9;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  border-radius: 10px;
+  padding-left: 20px;
+}
+.inactive-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  width: 90%;
+}

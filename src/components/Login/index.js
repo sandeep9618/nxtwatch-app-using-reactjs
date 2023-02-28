@@ -53,7 +53,7 @@ class Login extends Component {
       const jwtToken = jsonData.jwt_token
       const {history} = this.props
       history.replace('/')
-      Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
+      Cookies.set('jwt_token', jwtToken, {expires: 30})
       this.setState({isHavingErrorLoginDetails: false})
     } else {
       const jsonData = await response.json()
