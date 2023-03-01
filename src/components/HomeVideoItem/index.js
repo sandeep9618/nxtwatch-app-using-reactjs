@@ -1,4 +1,5 @@
 import {formatDistanceToNow} from 'date-fns'
+import {BsDot} from 'react-icons/bs'
 import {
   HomeVideoItemContainer,
   ThumbnailImg,
@@ -9,8 +10,10 @@ import {
   DescriptionViewsAndTimeContainer,
   ViewsAndTimeContainer,
   Views,
-  Dot,
   TimeDistance,
+  ChannelNameViewsAndTimeContainer,
+  DotOne,
+  DotTwo,
 } from './styledComponents'
 
 import NxtWatchContext from '../NxtWatchContext'
@@ -35,17 +38,36 @@ const HomeVideoItem = props => {
                 <TitleOfTheVideo isDarkThemeActivated={isDarkThemeActivated}>
                   {title}
                 </TitleOfTheVideo>
-                <ChannelName isDarkThemeActivated={isDarkThemeActivated}>
-                  {name}
-                </ChannelName>
-                <ViewsAndTimeContainer>
-                  <Views isDarkThemeActivated={isDarkThemeActivated}>
-                    {viewCount} Views
-                  </Views>
-                  <TimeDistance isDarkThemeActivated={isDarkThemeActivated}>
-                    {time}
-                  </TimeDistance>
-                </ViewsAndTimeContainer>
+
+                <ChannelNameViewsAndTimeContainer>
+                  <ChannelName isDarkThemeActivated={isDarkThemeActivated}>
+                    {name}
+                  </ChannelName>
+                  <DotOne>
+                    <BsDot
+                      size={23}
+                      color={
+                        isDarkThemeActivated === true ? '#94a3b8' : '#000000'
+                      }
+                    />
+                  </DotOne>
+                  <ViewsAndTimeContainer>
+                    <Views isDarkThemeActivated={isDarkThemeActivated}>
+                      {viewCount} Views
+                    </Views>
+                    <DotTwo>
+                      <BsDot
+                        size={23}
+                        color={
+                          isDarkThemeActivated === true ? '#94a3b8' : '#000000'
+                        }
+                      />
+                    </DotTwo>
+                    <TimeDistance isDarkThemeActivated={isDarkThemeActivated}>
+                      {time}
+                    </TimeDistance>
+                  </ViewsAndTimeContainer>
+                </ChannelNameViewsAndTimeContainer>
               </DescriptionViewsAndTimeContainer>
             </SubscribeLogoAndDescriptionContainer>
           </HomeVideoItemContainer>

@@ -20,6 +20,7 @@ import {
   InputContainer,
   SearchInput,
   SearchButton,
+  InputContainerTwo,
 } from './styledComponents'
 import {NxtWatchLogo} from '../Header/styledComponents'
 import NavBar from '../NavBar'
@@ -101,8 +102,22 @@ class Home extends Component {
           return (
             <HomeBgContainer data-testid="home">
               <Header />
-              <HomeContainer>
+              <HomeContainer isDarkThemeActivated={isDarkThemeActivated}>
                 <NavBar />
+
+                <InputContainerTwo>
+                  <SearchInput
+                    type="text"
+                    placeholder="Search"
+                    isDarkThemeActivated={isDarkThemeActivated}
+                  />
+                  <SearchButton
+                    type="button"
+                    isDarkThemeActivated={isDarkThemeActivated}
+                  >
+                    <BiSearch size={15} />
+                  </SearchButton>
+                </InputContainerTwo>
                 <VideosAndBannerContainer
                   isDarkThemeActivated={isDarkThemeActivated}
                 >

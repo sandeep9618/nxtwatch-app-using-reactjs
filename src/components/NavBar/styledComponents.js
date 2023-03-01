@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 export const NavBarBgContainer = styled.div`
+  @media screen and (max-width: 576px) {
+    display: none;
+    width: 0px;
+  }
   width: 20%;
   padding: 2%;
   padding-top: 20px;
@@ -24,7 +28,7 @@ export const NavOption = styled.li`
   align-items: center;
 `
 export const NavOptionText = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   margin-left: 20px;
   color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
