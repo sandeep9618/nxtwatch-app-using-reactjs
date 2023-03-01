@@ -6,6 +6,7 @@ import './App.css'
 import Login from './components/Login'
 import Home from './components/Home'
 import NxtWatchContext from './components/NxtWatchContext'
+import VideoItemDetails from './components/VideoItemDetails'
 
 class App extends Component {
   state = {isDarkThemeActivated: false}
@@ -27,6 +28,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
+          <Route exact path="/videos/:id" component={VideoItemDetails} />
         </Switch>
       </NxtWatchContext.Provider>
     )

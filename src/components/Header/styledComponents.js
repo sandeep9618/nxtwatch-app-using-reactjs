@@ -34,6 +34,7 @@ export const ProfileImg = styled.img`
 export const LogoutAndThemeContainer = styled.div`
   display: flex;
   align-items: center;
+  padding-right: 10px;
 `
 export const ThemeButton = styled.button`
   background-color: transparent;
@@ -59,6 +60,9 @@ export const LogOutButton = styled.button`
   height: 30px;
   margin-left: 15px;
   margin-right: 20px;
+  @media screen and (max-width: 576px) {
+    margin-right: 0px;
+  }
 `
 export const LogoutPopUpContainer = styled.div`
   height: 25vh;

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const VideosAndBannerContainer = styled.div`
   @media screen and (max-width: 576px) {
     width: 99.9%;
-    height: 90vh;
+    height: 81vh;
     padding: 0px;
   }
   margin: 0px;
@@ -13,12 +13,12 @@ export const VideosAndBannerContainer = styled.div`
   height: 90vh;
   overflow-y: auto;
   background-color: ${props =>
-    props.isDarkThemeActivated === true ? '#000000' : ' #f1f5f9'};
+    props.isDarkThemeActivated === true ? '#181818' : '#f9f9f9'};
 `
 export const BannerContainer = styled.div`
   background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
   background-size: cover;
-  width: 1000px;
+  width: 100%;
   height: 220px;
   padding: 3%;
   display: ${props => (props.isShowPrimeDetails === true ? 'flex' : 'none')};
@@ -34,7 +34,7 @@ export const HomeBgContainer = styled.div`
   width: 100%;
   margin: 0px;
   background-color: ${props =>
-    props.isDarkThemeActivated === true ? '#000000' : ' #f1f5f9'};
+    props.isDarkThemeActivated === true ? '#181818' : ' #f9f9f9'};
 `
 export const BannerText = styled.p`
   font-size: 17x;
@@ -57,7 +57,7 @@ export const HomeContainer = styled.div`
   margin: 0px;
   flex-direction: row;
   background-color: ${props =>
-    props.isDarkThemeActivated === true ? '#000000' : ' #f1f5f9'};
+    props.isDarkThemeActivated === true ? '#000000' : ' #f9f9f9'};
   @media screen and (max-width: 576px) {
     flex-direction: column;
   }
@@ -122,9 +122,10 @@ export const InputContainerTwo = styled.div`
   }
   display: none;
   margin: 12px;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-bottom: 0px;
   width: 400px;
+  padding-bottom: 15px;
 `
 
 export const SearchInput = styled.input`
@@ -159,4 +160,53 @@ export const SearchButton = styled.button`
     width: 40;
     margin-right: 0px;
   }
+`
+export const FailureDetailsContainer = styled.div`
+  display: flex;
+  height: 70vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+export const FailureImg = styled.img`
+  height: 40vh;
+  @media screen and (max-width: 576px) {
+    height: 20vh;
+  }
+`
+
+export const FailureHeading = styled.h1`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#e2e8f0' : '#1e293b'};
+`
+export const FailureDescription = styled.p`
+  font-size: 15px;
+  text-align: center;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#e2e8f0' : '#1e293b'};
+`
+export const RetryButton = styled.button`
+  color: white;
+  background-color: blue;
+  border: 0px;
+  padding: 8px;
+  width: 100px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+`
+export const NoSearchResultsHeading = styled.h1`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#e2e8f0' : '#1e293b'};
+`
+export const NoSearchResultsDescription = styled.p`
+  font-size: 15px;
+  text-align: center;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#e2e8f0' : '#1e293b'};
 `

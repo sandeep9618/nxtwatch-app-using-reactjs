@@ -5,7 +5,7 @@ export const NavBarBgContainer = styled.div`
     display: none;
     width: 0px;
   }
-  width: 20%;
+  width: 350px;
   padding: 2%;
   padding-top: 20px;
   display: flex;

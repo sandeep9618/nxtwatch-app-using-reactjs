@@ -21,20 +21,34 @@ import {
   SearchInput,
   SearchButton,
   InputContainerTwo,
+  FailureDetailsContainer,
+  FailureImg,
+  FailureHeading,
+  FailureDescription,
+  RetryButton,
+  NoSearchResultsHeading,
+  NoSearchResultsDescription,
 } from './styledComponents'
 import {NxtWatchLogo} from '../Header/styledComponents'
 import NavBar from '../NavBar'
 import NxtWatchContext from '../NxtWatchContext'
 
 class Home extends Component {
-  state = {videosArray: [], fetchingState: 'loading', isShowPrimeDetails: true}
-
-  componentDidMount() {
-    this.getVideoDetails()
+  state = {
+    videosArray: [],
+    fetchingState: 'loading',
+    isShowPrimeDetails: true,
+    searchInput: '',
   }
 
-  getVideoDetails = async () => {
-    const url = 'https://apis.ccbp.in/videos/all?search='
+  componentDidMount() {
+    this.getVideosDetails()
+  }
+
+  getVideosDetails = async () => {
+    this.setState({fetchingState: 'loading'})
+    const {searchInput} = this.state
+    const url = `https://apis.ccbp.in/videos/all?search=${searchInput}`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       method: 'GET',
@@ -67,8 +81,29 @@ class Home extends Component {
     </LoaderContainer>
   )
 
-  renderVideos = () => {
+  renderNoSearchResultsFound = isDarkThemeActivated => (
+    <FailureDetailsContainer>
+      <FailureImg
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+        alt="no videos"
+      />
+      <NoSearchResultsHeading isDarkThemeActivated={isDarkThemeActivated}>
+        NO Search results found
+      </NoSearchResultsHeading>
+      <NoSearchResultsDescription isDarkThemeActivated={isDarkThemeActivated}>
+        Try different key words or remove search filter
+      </NoSearchResultsDescription>
+      <RetryButton type="button" onClick={this.getVideosDetails}>
+        Retry
+      </RetryButton>
+    </FailureDetailsContainer>
+  )
+
+  renderVideos = isDarkThemeActivated => {
     const {videosArray} = this.state
+    if (videosArray.length === 0) {
+      return this.renderNoSearchResultsFound(isDarkThemeActivated)
+    }
     return (
       <VideosContainer>
         {videosArray.map(eachItem => (
@@ -78,19 +113,53 @@ class Home extends Component {
     )
   }
 
+  renderFailureDetails = isDarkThemeActivated => {
+    const failureImgUrl = isDarkThemeActivated
+      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+    return (
+      <FailureDetailsContainer>
+        <FailureImg src={failureImgUrl} alt="failure" />
+        <FailureHeading isDarkThemeActivated={isDarkThemeActivated}>
+          Oops! Something Went Wrong
+        </FailureHeading>
+        <FailureDescription isDarkThemeActivated={isDarkThemeActivated}>
+          We are having some trouble to complete your request. <br /> Please try
+          again.
+        </FailureDescription>
+        <RetryButton type="button" onClick={this.getVideosDetails}>
+          Retry
+        </RetryButton>
+      </FailureDetailsContainer>
+    )
+  }
+
   renderVideosStateWise = isDarkThemeActivated => {
     const {fetchingState} = this.state
     if (fetchingState === 'loading') {
       return this.renderLoadingItem(isDarkThemeActivated)
     }
     if (fetchingState === 'success') {
-      return this.renderVideos()
+      return this.renderVideos(isDarkThemeActivated)
     }
-    return null
+    return this.renderFailureDetails(isDarkThemeActivated)
   }
 
   onClickToClosePrimeDetails = () => {
     this.setState({isShowPrimeDetails: false})
+  }
+
+  onChangeSearchResults = async event => {
+    await this.setState({searchInput: event.target.value})
+    if (event.target.key === 'Enter') {
+      this.setState({fetchingState: 'loading'})
+      this.getVideosDetails()
+    }
+  }
+
+  onClickToGetSearchResults = () => {
+    this.setState({fetchingState: 'loading'})
+    this.getVideosDetails()
   }
 
   render() {
@@ -109,11 +178,13 @@ class Home extends Component {
                   <SearchInput
                     type="text"
                     placeholder="Search"
+                    onChange={this.onChangeSearchResults}
                     isDarkThemeActivated={isDarkThemeActivated}
                   />
                   <SearchButton
                     type="button"
                     isDarkThemeActivated={isDarkThemeActivated}
+                    onClick={this.onClickToGetSearchResults}
                   >
                     <BiSearch size={15} />
                   </SearchButton>
@@ -147,11 +218,13 @@ class Home extends Component {
                     <SearchInput
                       type="text"
                       placeholder="Search"
+                      onChange={this.onChangeSearchResults}
                       isDarkThemeActivated={isDarkThemeActivated}
                     />
                     <SearchButton
                       type="button"
                       isDarkThemeActivated={isDarkThemeActivated}
+                      onClick={this.onClickToGetSearchResults}
                     >
                       <BiSearch size={15} />
                     </SearchButton>
