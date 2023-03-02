@@ -1,6 +1,10 @@
 import {Component} from 'react'
+import {formatDistanceToNow} from 'date-fns'
 import Cookies from 'js-cookie'
+import ReactPlayer from 'react-player'
 import Loader from 'react-loader-spinner'
+import {BsDot} from 'react-icons/bs'
+import {BiLike, BiDislike, BiListPlus} from 'react-icons/bi'
 
 import Header from '../Header'
 import NavBar from '../NavBar'
@@ -9,7 +13,27 @@ import {
   VideoItemDetailsBgContainer,
   VideoItemDetailsContainer,
   VideoItemDetailsLoaderContainer,
+  VideoPlayerContainer,
+  TitleOfTheVideo,
+  ViewsAndLikesContainer,
+  Views,
+  ViewsAndTimeContainer,
+  Time,
+  LikeAndSaveContainer,
+  LikeContainer,
+  LikePara,
+  SaveContainer,
+  ChannelLogoAndSubscribersContainer,
+  ChannelLogo,
+  HrLine,
+  ChannelAndDescriptionContainer,
+  ChannelName,
+  SubScribersCount,
+  DescriptionOfTheVideo,
+  ReactVideoPlayerContainer,
 } from './styledComponents'
+
+import './index.css'
 
 import NxtWatchContext from '../NxtWatchContext'
 
@@ -66,7 +90,63 @@ class VideoItemDetails extends Component {
     </VideoItemDetailsLoaderContainer>
   )
 
-  renderVideoItemDetails = isDarkThemeActivated => <div>video details</div>
+  renderVideoItemDetails = isDarkThemeActivated => {
+    const {videoDetails} = this.state
+    const {
+      videoUrl,
+      title,
+      viewCount,
+      publishedAt,
+      description,
+      channel,
+    } = videoDetails
+    const {profileImageUrl, name, subscriberCount} = channel
+    const time = formatDistanceToNow(new Date(publishedAt))
+
+    return (
+      <VideoPlayerContainer isDarkThemeActivated={isDarkThemeActivated}>
+        <ReactVideoPlayerContainer>
+          <ReactPlayer url={videoUrl} controls className="react-player" />
+        </ReactVideoPlayerContainer>
+        <TitleOfTheVideo isDarkThemeActivated={isDarkThemeActivated}>
+          {title}
+        </TitleOfTheVideo>
+        <ViewsAndLikesContainer>
+          <ViewsAndTimeContainer>
+            <Views>{viewCount} views</Views>
+            <BsDot size={20} />
+            <Time>{time}</Time>
+          </ViewsAndTimeContainer>
+
+          <LikeAndSaveContainer>
+            <LikeContainer>
+              <BiLike size={20} />
+              <LikePara>Like</LikePara>
+            </LikeContainer>
+
+            <LikeContainer>
+              <BiDislike size={20} />
+              <LikePara>Dislike</LikePara>
+            </LikeContainer>
+            <SaveContainer>
+              <BiListPlus size={20} />
+              <LikePara>Save</LikePara>
+            </SaveContainer>
+          </LikeAndSaveContainer>
+        </ViewsAndLikesContainer>
+        <HrLine />
+
+        <ChannelLogoAndSubscribersContainer>
+          <ChannelLogo src={profileImageUrl} alt="channel logo" />
+          <ChannelAndDescriptionContainer>
+            <ChannelName>{name}</ChannelName>
+            <SubScribersCount>{subscriberCount} subscribers</SubScribersCount>
+            <DescriptionOfTheVideo>{description}</DescriptionOfTheVideo>
+          </ChannelAndDescriptionContainer>
+        </ChannelLogoAndSubscribersContainer>
+      </VideoPlayerContainer>
+    )
+  }
 
   renderStateWiseDetails = isDarkThemeActivated => {
     const {fetchingStatus} = this.state
@@ -82,7 +162,10 @@ class VideoItemDetails extends Component {
         {value => {
           const {isDarkThemeActivated} = value
           return (
-            <VideoItemDetailsBgContainer>
+            <VideoItemDetailsBgContainer
+              isDarkThemeActivated={isDarkThemeActivated}
+              data-testid="videoItemDetails"
+            >
               <Header />
               <VideoItemDetailsContainer>
                 <NavBar />
