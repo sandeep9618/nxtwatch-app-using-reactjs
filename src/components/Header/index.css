@@ -4,6 +4,7 @@
 @media screen and (max-width: 576px) {
   .log-out-icon {
     display: block !important;
+    margin-left: 0px !important;
   }
 }
 .logout-btn-container {
@@ -12,4 +13,12 @@
   flex-direction: column;
   padding-top: 0px;
   padding-left: 0px;
+  width: 35px;
+  padding-left: 7px;
+}
+
+@media screen and (min-width: 576px) {
+  .logout-btn-container {
+    width: 70px;
+  }
 }

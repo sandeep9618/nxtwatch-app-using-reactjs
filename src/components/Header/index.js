@@ -18,6 +18,7 @@ import {
   SettingsButton,
   ProfileImgButton,
   LogOutIconButton,
+  PopUpContainer,
 } from './styledComponents'
 
 import NxtWatchContext from '../NxtWatchContext'
@@ -64,38 +65,42 @@ const Header = () => (
                 color={isDarkThemeActivated ? '#ffffff' : '#000000'}
               />
             </SettingsButton>
-            <Popup
-              modal
-              trigger={
-                <div className="logout-btn-container">
-                  <LogOutButton
-                    isDarkThemeActivated={isDarkThemeActivated}
-                    type="button"
-                  >
-                    Logout
-                  </LogOutButton>
-                  <LogOutIconButton
-                    type="button"
-                    isDarkThemeActivated={isDarkThemeActivated}
-                  >
-                    <FiLogOut
+            <PopUpContainer>
+              <Popup
+                modal
+                trigger={
+                  <div className="logout-btn-container">
+                    <LogOutButton
                       isDarkThemeActivated={isDarkThemeActivated}
-                      size={23}
-                      className="log-out-icon"
-                    />
-                  </LogOutIconButton>
-                </div>
-              }
-              className="popup-content"
-            >
-              {close => (
-                <LogoutPopUpContainer>
-                  <LogOutText>Are you sure, you want to logout?</LogOutText>
-                  <CancelButton onClick={() => close()}>Cancel</CancelButton>
-                  <ConfirmButton onClick={() => close()}>Confirm</ConfirmButton>
-                </LogoutPopUpContainer>
-              )}
-            </Popup>
+                      type="button"
+                    >
+                      Logout
+                    </LogOutButton>
+                    <LogOutIconButton
+                      type="button"
+                      isDarkThemeActivated={isDarkThemeActivated}
+                    >
+                      <FiLogOut
+                        isDarkThemeActivated={isDarkThemeActivated}
+                        size={23}
+                        className="log-out-icon"
+                      />
+                    </LogOutIconButton>
+                  </div>
+                }
+                className="popup-content"
+              >
+                {close => (
+                  <LogoutPopUpContainer>
+                    <LogOutText>Are you sure, you want to logout?</LogOutText>
+                    <CancelButton onClick={() => close()}>Cancel</CancelButton>
+                    <ConfirmButton onClick={() => close()}>
+                      Confirm
+                    </ConfirmButton>
+                  </LogoutPopUpContainer>
+                )}
+              </Popup>
+            </PopUpContainer>
           </LogoutAndThemeContainer>
         </HeaderBgContainer>
       )

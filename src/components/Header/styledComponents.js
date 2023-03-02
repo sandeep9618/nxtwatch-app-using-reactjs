@@ -35,7 +35,7 @@ export const LogoutAndThemeContainer = styled.div`
   display: flex;
   align-items: center;
   padding-right: 10px;
-  width: 18%;
+  width: 13%;
   @media screen and (max-width: 576px) {
     justify-content: space-between;
     width: 30%;
@@ -70,6 +70,7 @@ export const LogOutButton = styled.button`
   @media screen and (max-width: 576px) {
     margin-right: 0px;
     display: none;
+    width: 0px;
   }
 `
 export const LogOutIconButton = styled.button`
@@ -146,4 +147,7 @@ export const ProfileImgButton = styled.button`
   @media screen and (min-width: 577px) {
     display: block;
   }
+`
+export const PopUpContainer = styled.div`
+  padding-left: 0px;
 `
