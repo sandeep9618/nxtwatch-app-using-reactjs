@@ -5,6 +5,7 @@ import {BiSearch} from 'react-icons/bi'
 import Cookies from 'js-cookie'
 import Header from '../Header'
 import HomeVideoItem from '../HomeVideoItem'
+import FailureDetails from '../FailureDetails'
 
 import {
   HomeBgContainer,
@@ -23,11 +24,9 @@ import {
   InputContainerTwo,
   FailureDetailsContainer,
   FailureImg,
-  FailureHeading,
-  FailureDescription,
-  RetryButton,
   NoSearchResultsHeading,
   NoSearchResultsDescription,
+  RetryButton,
 } from './styledComponents'
 import {NxtWatchLogo} from '../Header/styledComponents'
 import NavBar from '../NavBar'
@@ -67,6 +66,8 @@ class Home extends Component {
         viewCount: i.view_count,
       }))
       this.setState({videosArray: updateData, fetchingState: 'success'})
+    } else {
+      this.setState({fetchingState: 'failure'})
     }
   }
 
@@ -113,26 +114,9 @@ class Home extends Component {
     )
   }
 
-  renderFailureDetails = isDarkThemeActivated => {
-    const failureImgUrl = isDarkThemeActivated
-      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
-    return (
-      <FailureDetailsContainer>
-        <FailureImg src={failureImgUrl} alt="failure view" />
-        <FailureHeading isDarkThemeActivated={isDarkThemeActivated}>
-          Oops! Something Went Wrong
-        </FailureHeading>
-        <FailureDescription isDarkThemeActivated={isDarkThemeActivated}>
-          We are having some trouble to complete your request. <br /> Please try
-          again.
-        </FailureDescription>
-        <RetryButton type="button" onClick={this.getVideosDetails}>
-          Retry
-        </RetryButton>
-      </FailureDetailsContainer>
-    )
-  }
+  renderFailureDetails = () => (
+    <FailureDetails onReRender={this.getVideosDetails} />
+  )
 
   renderVideosStateWise = isDarkThemeActivated => {
     const {fetchingState} = this.state

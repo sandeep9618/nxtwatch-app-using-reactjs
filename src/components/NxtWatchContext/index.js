@@ -5,6 +5,8 @@ const NxtWatchContext = React.createContext({
   onClickToChangeTheme: () => {},
   savedVideos: [],
   onClickToSaveTheVideo: () => {},
+  activeNavOption: 'HOME',
+  onChangeActiveNavOption: () => {},
 })
 
 export default NxtWatchContext

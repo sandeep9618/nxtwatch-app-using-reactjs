@@ -26,11 +26,12 @@ const NavItem = props => {
     onChangeActiveRoute,
     activeNavOption,
     isDarkThemeActivated,
+    onChangeActiveNavOption,
   } = props
   const {id, displayText, icon, path} = eachOption
 
   const onChangeActiveItem = () => {
-    onChangeActiveRoute(id)
+    onChangeActiveRoute({id, onChangeActiveNavOption})
   }
 
   const isActiveOption = id === activeNavOption
@@ -77,18 +78,20 @@ const navOptions = [
 ]
 
 class NavBar extends Component {
-  state = {activeNavOption: navOptions[0].id}
-
-  onChangeActiveRoute = id => {
-    this.setState({activeNavOption: id})
+  onChangeActiveRoute = idAndOnChangeNavOptionFunction => {
+    const {id, onChangeActiveNavOption} = idAndOnChangeNavOptionFunction
+    onChangeActiveNavOption(id)
   }
 
   render() {
-    const {activeNavOption} = this.state
     return (
       <NxtWatchContext.Consumer>
         {value => {
-          const {isDarkThemeActivated} = value
+          const {
+            isDarkThemeActivated,
+            activeNavOption,
+            onChangeActiveNavOption,
+          } = value
           return (
             <NavBarBgContainer isDarkThemeActivated={isDarkThemeActivated}>
               <NavOptions>
@@ -99,6 +102,7 @@ class NavBar extends Component {
                     isDarkThemeActivated={isDarkThemeActivated}
                     onChangeActiveRoute={this.onChangeActiveRoute}
                     activeNavOption={activeNavOption}
+                    onChangeActiveNavOption={onChangeActiveNavOption}
                   />
                 ))}
               </NavOptions>
