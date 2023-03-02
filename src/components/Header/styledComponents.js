@@ -35,6 +35,11 @@ export const LogoutAndThemeContainer = styled.div`
   display: flex;
   align-items: center;
   padding-right: 10px;
+  width: 18%;
+  @media screen and (max-width: 576px) {
+    justify-content: space-between;
+    width: 30%;
+  }
 `
 export const ThemeButton = styled.button`
   background-color: transparent;
@@ -49,6 +54,8 @@ export const ThemeButton = styled.button`
   justify-content: center;
   margin-right: 15px;
   margin-top: 0px;
+  padding-right: 0px;
+  width: 18px;
 `
 export const LogOutButton = styled.button`
   background-color: transparent;
@@ -62,8 +69,27 @@ export const LogOutButton = styled.button`
   margin-right: 20px;
   @media screen and (max-width: 576px) {
     margin-right: 0px;
+    display: none;
   }
 `
+export const LogOutIconButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : 'black')};
+  border-radius: 5px;
+  cursor: pointer;
+  height: 30px;
+  margin-left: 15px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media screen and (min-width: 576px) {
+    margin-right: 0px;
+    display: none;
+  }
+`
+
 export const LogoutPopUpContainer = styled.div`
   height: 25vh;
   background-color: black;

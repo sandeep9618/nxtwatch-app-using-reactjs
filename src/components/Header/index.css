@@ -1,0 +1,15 @@
+.log-out-icon {
+  display: none !important;
+}
+@media screen and (max-width: 576px) {
+  .log-out-icon {
+    display: block !important;
+  }
+}
+.logout-btn-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 0px;
+  padding-left: 0px;
+}

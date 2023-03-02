@@ -9,7 +9,21 @@ import NxtWatchContext from './components/NxtWatchContext'
 import VideoItemDetails from './components/VideoItemDetails'
 
 class App extends Component {
-  state = {isDarkThemeActivated: false}
+  state = {isDarkThemeActivated: false, savedVideos: []}
+
+  onClickToSaveTheVideo = obj => {
+    const {isSaved, videoDetailsObj} = obj
+    if (isSaved === true) {
+      this.setState(prevState => ({
+        savedVideos: [...prevState.savedVideos, videoDetailsObj],
+      }))
+    } else {
+      const {id} = videoDetailsObj
+      const {savedVideos} = this.state
+      const newData = savedVideos.filter(i => i.id !== id)
+      this.setState({savedVideos: newData})
+    }
+  }
 
   onClickToChangeTheme = () => {
     const {isDarkThemeActivated} = this.state
@@ -17,12 +31,14 @@ class App extends Component {
   }
 
   render() {
-    const {isDarkThemeActivated} = this.state
+    const {isDarkThemeActivated, savedVideos} = this.state
+    console.log(savedVideos)
     return (
       <NxtWatchContext.Provider
         value={{
           isDarkThemeActivated,
           onClickToChangeTheme: this.onClickToChangeTheme,
+          onClickToSaveTheVideo: this.onClickToSaveTheVideo,
         }}
       >
         <Switch>

@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 import {AiFillHome} from 'react-icons/ai'
 import {HiFire} from 'react-icons/hi'
 import {SiYoutubegaming} from 'react-icons/si'
@@ -26,7 +27,7 @@ const NavItem = props => {
     activeNavOption,
     isDarkThemeActivated,
   } = props
-  const {id, displayText, icon} = eachOption
+  const {id, displayText, icon, path} = eachOption
 
   const onChangeActiveItem = () => {
     onChangeActiveRoute(id)
@@ -35,30 +36,43 @@ const NavItem = props => {
   const isActiveOption = id === activeNavOption
 
   return (
-    <NavOption>
-      <NavButton
-        isActiveOption={isActiveOption}
-        type="button"
-        onClick={onChangeActiveItem}
-        isDarkThemeActivated={isDarkThemeActivated}
-      >
-        {icon}
-        <NavOptionText isDarkThemeActivated={isDarkThemeActivated}>
-          {displayText}
-        </NavOptionText>
-      </NavButton>
-    </NavOption>
+    <Link to={path} className="link-item">
+      <NavOption>
+        <NavButton
+          isActiveOption={isActiveOption}
+          type="button"
+          onClick={onChangeActiveItem}
+          isDarkThemeActivated={isDarkThemeActivated}
+        >
+          {icon}
+          <NavOptionText isDarkThemeActivated={isDarkThemeActivated}>
+            {displayText}
+          </NavOptionText>
+        </NavButton>
+      </NavOption>
+    </Link>
   )
 }
 
 const navOptions = [
-  {displayText: 'Home', icon: <AiFillHome size={20} />, id: 'HOME'},
-  {displayText: 'Trending', icon: <HiFire size={20} />, id: 'TRENDING'},
-  {displayText: 'Gaming', icon: <SiYoutubegaming size={20} />, id: 'GAMING'},
+  {displayText: 'Home', icon: <AiFillHome size={20} />, id: 'HOME', path: '/'},
+  {
+    displayText: 'Trending',
+    icon: <HiFire size={20} />,
+    id: 'TRENDING',
+    path: '/trending',
+  },
+  {
+    displayText: 'Gaming',
+    icon: <SiYoutubegaming size={20} />,
+    id: 'GAMING',
+    path: '/gaming',
+  },
   {
     displayText: 'Saved Videos',
     icon: <BiListPlus size={20} />,
     id: 'SAVED VIDEOS',
+    path: '/saved-videos',
   },
 ]
 

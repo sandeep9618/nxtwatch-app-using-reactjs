@@ -119,7 +119,7 @@ class Home extends Component {
       : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
     return (
       <FailureDetailsContainer>
-        <FailureImg src={failureImgUrl} alt="failure" />
+        <FailureImg src={failureImgUrl} alt="failure view" />
         <FailureHeading isDarkThemeActivated={isDarkThemeActivated}>
           Oops! Something Went Wrong
         </FailureHeading>

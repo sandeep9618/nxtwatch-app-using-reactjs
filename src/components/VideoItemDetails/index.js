@@ -31,6 +31,15 @@ import {
   SubScribersCount,
   DescriptionOfTheVideo,
   ReactVideoPlayerContainer,
+  FailureDetailsContainer,
+  FailureImg,
+  FailureHeading,
+  FailureDescription,
+  RetryButton,
+  DescriptionOfTheVideoTwo,
+  DisLikeContainer,
+  DisLikePara,
+  SavedPara,
 } from './styledComponents'
 
 import './index.css'
@@ -38,7 +47,12 @@ import './index.css'
 import NxtWatchContext from '../NxtWatchContext'
 
 class VideoItemDetails extends Component {
-  state = {fetchingStatus: 'loading', videoDetails: {}}
+  state = {
+    fetchingStatus: 'loading',
+    videoDetails: {},
+    likedStatus: '',
+    isSaved: false,
+  }
 
   componentDidMount() {
     this.getVideoItemDetails()
@@ -79,6 +93,27 @@ class VideoItemDetails extends Component {
     }
   }
 
+  renderFailureDetails = isDarkThemeActivated => {
+    const failureImgUrl = isDarkThemeActivated
+      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+    return (
+      <FailureDetailsContainer>
+        <FailureImg src={failureImgUrl} alt="failure" />
+        <FailureHeading isDarkThemeActivated={isDarkThemeActivated}>
+          Oops! Something Went Wrong
+        </FailureHeading>
+        <FailureDescription isDarkThemeActivated={isDarkThemeActivated}>
+          We are having some trouble to complete your request. <br /> Please try
+          again.
+        </FailureDescription>
+        <RetryButton type="button" onClick={this.getVideoItemDetails}>
+          Retry
+        </RetryButton>
+      </FailureDetailsContainer>
+    )
+  }
+
   renderLoadingDetails = isDarkThemeActivated => (
     <VideoItemDetailsLoaderContainer>
       <Loader
@@ -90,8 +125,14 @@ class VideoItemDetails extends Component {
     </VideoItemDetailsLoaderContainer>
   )
 
-  renderVideoItemDetails = isDarkThemeActivated => {
-    const {videoDetails} = this.state
+  onClickToSaveTheVideoItem = onClickToSaveTheVideo => {
+    const {isSaved, videoDetails} = this.state
+    onClickToSaveTheVideo({videoDetailsObj: videoDetails, isSaved})
+  }
+
+  renderVideoItemDetails = obj => {
+    const {videoDetails, likedStatus, isSaved} = this.state
+    const {isDarkThemeActivated, onClickToSaveTheVideo} = obj
     const {
       videoUrl,
       title,
@@ -103,6 +144,13 @@ class VideoItemDetails extends Component {
     const {profileImageUrl, name, subscriberCount} = channel
     const time = formatDistanceToNow(new Date(publishedAt))
 
+    const onClickToSaveTheVideoItem = async () => {
+      await this.setState(prevState => ({
+        isSaved: !prevState.isSaved,
+      }))
+      this.onClickToSaveTheVideoItem(onClickToSaveTheVideo)
+    }
+
     return (
       <VideoPlayerContainer isDarkThemeActivated={isDarkThemeActivated}>
         <ReactVideoPlayerContainer>
@@ -113,24 +161,46 @@ class VideoItemDetails extends Component {
         </TitleOfTheVideo>
         <ViewsAndLikesContainer>
           <ViewsAndTimeContainer>
-            <Views>{viewCount} views</Views>
-            <BsDot size={20} />
-            <Time>{time}</Time>
+            <Views isDarkThemeActivated={isDarkThemeActivated}>
+              {viewCount} views
+            </Views>
+            <BsDot
+              color={isDarkThemeActivated === true ? '#94a3b8' : '#000000'}
+              size={20}
+            />
+            <Time isDarkThemeActivated={isDarkThemeActivated}>{time}</Time>
           </ViewsAndTimeContainer>
 
           <LikeAndSaveContainer>
-            <LikeContainer>
+            <LikeContainer
+              type="button"
+              onClick={this.onClickToLike}
+              likedStatus={likedStatus}
+            >
               <BiLike size={20} />
-              <LikePara>Like</LikePara>
+              <LikePara likedStatus={likedStatus}>Like</LikePara>
             </LikeContainer>
 
-            <LikeContainer>
+            <DisLikeContainer
+              type="button"
+              onClick={this.onClickToDisLike}
+              likedStatus={likedStatus}
+            >
               <BiDislike size={20} />
-              <LikePara>Dislike</LikePara>
-            </LikeContainer>
-            <SaveContainer>
+              <DisLikePara likedStatus={likedStatus}>Dislike</DisLikePara>
+            </DisLikeContainer>
+            <SaveContainer
+              type="button"
+              onClick={onClickToSaveTheVideoItem}
+              isSaved={isSaved}
+            >
               <BiListPlus size={20} />
-              <LikePara>Save</LikePara>
+              <SavedPara
+                isDarkThemeActivated={isDarkThemeActivated}
+                isSaved={isSaved}
+              >
+                {isSaved ? 'Saved' : 'Save'}
+              </SavedPara>
             </SaveContainer>
           </LikeAndSaveContainer>
         </ViewsAndLikesContainer>
@@ -139,28 +209,52 @@ class VideoItemDetails extends Component {
         <ChannelLogoAndSubscribersContainer>
           <ChannelLogo src={profileImageUrl} alt="channel logo" />
           <ChannelAndDescriptionContainer>
-            <ChannelName>{name}</ChannelName>
-            <SubScribersCount>{subscriberCount} subscribers</SubScribersCount>
-            <DescriptionOfTheVideo>{description}</DescriptionOfTheVideo>
+            <ChannelName isDarkThemeActivated={isDarkThemeActivated}>
+              {name}
+            </ChannelName>
+            <SubScribersCount isDarkThemeActivated={isDarkThemeActivated}>
+              {subscriberCount} subscribers
+            </SubScribersCount>
+            <DescriptionOfTheVideo isDarkThemeActivated={isDarkThemeActivated}>
+              {description}
+            </DescriptionOfTheVideo>
           </ChannelAndDescriptionContainer>
         </ChannelLogoAndSubscribersContainer>
+        <DescriptionOfTheVideoTwo isDarkThemeActivated={isDarkThemeActivated}>
+          {description}
+        </DescriptionOfTheVideoTwo>
       </VideoPlayerContainer>
     )
   }
 
-  renderStateWiseDetails = isDarkThemeActivated => {
+  renderStateWiseDetails = obj => {
+    const {isDarkThemeActivated, onClickToSaveTheVideo} = obj
     const {fetchingStatus} = this.state
     if (fetchingStatus === 'loading') {
       return this.renderLoadingDetails(isDarkThemeActivated)
     }
-    return this.renderVideoItemDetails(isDarkThemeActivated)
+    if (fetchingStatus === 'success') {
+      return this.renderVideoItemDetails({
+        isDarkThemeActivated,
+        onClickToSaveTheVideo,
+      })
+    }
+    return this.renderFailureDetails(isDarkThemeActivated)
+  }
+
+  onClickToLike = () => {
+    this.setState({likedStatus: 'liked'})
+  }
+
+  onClickToDisLike = () => {
+    this.setState({likedStatus: 'disliked'})
   }
 
   render() {
     return (
       <NxtWatchContext.Consumer>
         {value => {
-          const {isDarkThemeActivated} = value
+          const {isDarkThemeActivated, onClickToSaveTheVideo} = value
           return (
             <VideoItemDetailsBgContainer
               isDarkThemeActivated={isDarkThemeActivated}
@@ -169,7 +263,10 @@ class VideoItemDetails extends Component {
               <Header />
               <VideoItemDetailsContainer>
                 <NavBar />
-                {this.renderStateWiseDetails(isDarkThemeActivated)}
+                {this.renderStateWiseDetails({
+                  isDarkThemeActivated,
+                  onClickToSaveTheVideo,
+                })}
               </VideoItemDetailsContainer>
             </VideoItemDetailsBgContainer>
           )

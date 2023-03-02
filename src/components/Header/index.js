@@ -1,8 +1,8 @@
-import {BsSun} from 'react-icons/bs'
-import {HiMoon} from 'react-icons/hi'
+import {FiSun, FiLogOut} from 'react-icons/fi'
+import {HiMoon, HiMenu} from 'react-icons/hi'
 import Popup from 'reactjs-popup'
-import {AiTwotoneSetting} from 'react-icons/ai'
 
+import './index.css'
 import {
   HeaderBgContainer,
   NxtWatchLogo,
@@ -17,6 +17,7 @@ import {
   ConfirmButton,
   SettingsButton,
   ProfileImgButton,
+  LogOutIconButton,
 } from './styledComponents'
 
 import NxtWatchContext from '../NxtWatchContext'
@@ -38,6 +39,7 @@ const Header = () => (
           <NxtWatchButton type="button">
             <NxtWatchLogo src={nxtWatchLogoImgUrl} alt="website logo" />
           </NxtWatchButton>
+
           <LogoutAndThemeContainer>
             <ThemeButton
               type="button"
@@ -45,7 +47,7 @@ const Header = () => (
               data-testid="theme"
             >
               {isDarkThemeActivated ? (
-                <BsSun size={30} color="#ffffff" />
+                <FiSun size={30} color="#ffffff" />
               ) : (
                 <HiMoon size={30} />
               )}
@@ -57,7 +59,7 @@ const Header = () => (
               />
             </ProfileImgButton>
             <SettingsButton>
-              <AiTwotoneSetting
+              <HiMenu
                 size={24}
                 color={isDarkThemeActivated ? '#ffffff' : '#000000'}
               />
@@ -65,12 +67,24 @@ const Header = () => (
             <Popup
               modal
               trigger={
-                <LogOutButton
-                  isDarkThemeActivated={isDarkThemeActivated}
-                  type="button"
-                >
-                  Logout
-                </LogOutButton>
+                <div className="logout-btn-container">
+                  <LogOutButton
+                    isDarkThemeActivated={isDarkThemeActivated}
+                    type="button"
+                  >
+                    Logout
+                  </LogOutButton>
+                  <LogOutIconButton
+                    type="button"
+                    isDarkThemeActivated={isDarkThemeActivated}
+                  >
+                    <FiLogOut
+                      isDarkThemeActivated={isDarkThemeActivated}
+                      size={23}
+                      className="log-out-icon"
+                    />
+                  </LogOutIconButton>
+                </div>
               }
               className="popup-content"
             >
