@@ -22,3 +22,6 @@
     width: 70px;
   }
 }
+.link-item {
+  text-decoration: none;
+}
