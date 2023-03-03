@@ -1,15 +1,25 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
+import {HiFire} from 'react-icons/hi'
 
 import Header from '../Header'
 import NavBar from '../NavBar'
+import TrendingVideoItem from '../TrendingVideoItem'
 
 import {
   TrendingBgContainer,
   TrendingContainer,
   LoaderContainer,
+  TrendingVideos,
+  TrendingCard,
+  TrendingVideosBgcontainer,
+  IconContainer,
+  TrendingHeading,
+  FailureContainer,
 } from './styledComponents'
+
+import FailureDetails from '../FailureDetails'
 
 import NxtWatchContext from '../NxtWatchContext'
 
@@ -21,6 +31,7 @@ class Trending extends Component {
   }
 
   getTrendingVideoItemDetails = async () => {
+    this.setState({fetchingStatus: 'loading'})
     const url = 'https://apis.ccbp.in/videos/trending'
     const jwtToken = Cookies.get('jwt_token')
     const options = {
@@ -43,8 +54,16 @@ class Trending extends Component {
         viewCount: i.view_count,
       }))
       this.setState({trendingVideos: upDateData, fetchingStatus: 'success'})
+    } else {
+      this.setState({fetchingStatus: 'failure'})
     }
   }
+
+  renderFailureDetails = () => (
+    <FailureContainer>
+      <FailureDetails onReRender={this.getTrendingVideoItemDetails} />
+    </FailureContainer>
+  )
 
   renderLoading = isDarkThemeActivated => (
     <LoaderContainer data-testid="loader">
@@ -59,7 +78,23 @@ class Trending extends Component {
 
   renderVideos = isDarkThemeActivated => {
     const {trendingVideos} = this.state
-    return <h1>Trending videos</h1>
+    return (
+      <TrendingVideosBgcontainer>
+        <TrendingCard isDarkThemeActivated={isDarkThemeActivated}>
+          <IconContainer isDarkThemeActivated={isDarkThemeActivated}>
+            <HiFire size={25} color=" #ff0b37" />
+          </IconContainer>
+          <TrendingHeading isDarkThemeActivated={isDarkThemeActivated}>
+            Trending
+          </TrendingHeading>
+        </TrendingCard>
+        <TrendingVideos>
+          {trendingVideos.map(eachVideo => (
+            <TrendingVideoItem eachVideo={eachVideo} key={eachVideo.id} />
+          ))}
+        </TrendingVideos>
+      </TrendingVideosBgcontainer>
+    )
   }
 
   renderStateWise = isDarkThemeActivated => {
@@ -67,7 +102,10 @@ class Trending extends Component {
     if (fetchingStatus === 'loading') {
       return this.renderLoading(isDarkThemeActivated)
     }
-    return this.renderVideos(isDarkThemeActivated)
+    if (fetchingStatus === 'success') {
+      return this.renderVideos(isDarkThemeActivated)
+    }
+    return this.renderFailureDetails()
   }
 
   render() {

@@ -221,7 +221,10 @@ class VideoItemDetails extends Component {
         onClickToSaveTheVideo,
       })
     }
-    return this.renderFailureDetails(isDarkThemeActivated)
+    if (fetchingStatus === 'failure') {
+      return this.renderFailureDetails(isDarkThemeActivated)
+    }
+    return null
   }
 
   onClickToLike = () => {

@@ -120,13 +120,16 @@ class Home extends Component {
 
   renderVideosStateWise = isDarkThemeActivated => {
     const {fetchingState} = this.state
-    if (fetchingState === 'loading') {
-      return this.renderLoadingItem(isDarkThemeActivated)
+    switch (fetchingState) {
+      case 'success':
+        return this.renderVideos(isDarkThemeActivated)
+      case 'failure':
+        return this.renderFailureDetails
+      case 'loading':
+        return this.renderLoadingItem(isDarkThemeActivated)
+      default:
+        return null
     }
-    if (fetchingState === 'success') {
-      return this.renderVideos(isDarkThemeActivated)
-    }
-    return this.renderFailureDetails(isDarkThemeActivated)
   }
 
   onClickToClosePrimeDetails = () => {
