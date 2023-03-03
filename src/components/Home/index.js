@@ -32,10 +32,17 @@ import {NxtWatchLogo} from '../Header/styledComponents'
 import NavBar from '../NavBar'
 import NxtWatchContext from '../NxtWatchContext'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class Home extends Component {
   state = {
     videosArray: [],
-    fetchingState: 'loading',
+    fetchingState: apiStatusConstants.initial,
     isShowPrimeDetails: true,
     searchInput: '',
   }
@@ -45,7 +52,7 @@ class Home extends Component {
   }
 
   getVideosDetails = async () => {
-    this.setState({fetchingState: 'loading'})
+    this.setState({fetchingState: apiStatusConstants.inProgress})
     const {searchInput} = this.state
     const url = `https://apis.ccbp.in/videos/all?search=${searchInput}`
     const jwtToken = Cookies.get('jwt_token')
@@ -65,9 +72,12 @@ class Home extends Component {
         title: i.title,
         viewCount: i.view_count,
       }))
-      this.setState({videosArray: updateData, fetchingState: 'success'})
+      this.setState({
+        videosArray: updateData,
+        fetchingState: apiStatusConstants.success,
+      })
     } else {
-      this.setState({fetchingState: 'failure'})
+      this.setState({fetchingState: apiStatusConstants.failure})
     }
   }
 
@@ -121,11 +131,11 @@ class Home extends Component {
   renderVideosStateWise = isDarkThemeActivated => {
     const {fetchingState} = this.state
     switch (fetchingState) {
-      case 'success':
+      case apiStatusConstants.success:
         return this.renderVideos(isDarkThemeActivated)
-      case 'failure':
+      case apiStatusConstants.failure:
         return this.renderFailureDetails
-      case 'loading':
+      case apiStatusConstants.inProgress:
         return this.renderLoadingItem(isDarkThemeActivated)
       default:
         return null

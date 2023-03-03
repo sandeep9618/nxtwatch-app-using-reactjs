@@ -23,15 +23,22 @@ import FailureDetails from '../FailureDetails'
 
 import NxtWatchContext from '../NxtWatchContext'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class Trending extends Component {
-  state = {fetchingStatus: 'loading', trendingVideos: []}
+  state = {fetchingStatus: apiStatusConstants.initial, trendingVideos: []}
 
   componentDidMount() {
     this.getTrendingVideoItemDetails()
   }
 
   getTrendingVideoItemDetails = async () => {
-    this.setState({fetchingStatus: 'loading'})
+    this.setState({fetchingStatus: apiStatusConstants.inProgress})
     const url = 'https://apis.ccbp.in/videos/trending'
     const jwtToken = Cookies.get('jwt_token')
     const options = {
@@ -53,9 +60,12 @@ class Trending extends Component {
         thumbnailUrl: i.thumbnail_url,
         viewCount: i.view_count,
       }))
-      this.setState({trendingVideos: upDateData, fetchingStatus: 'success'})
+      this.setState({
+        trendingVideos: upDateData,
+        fetchingStatus: apiStatusConstants.success,
+      })
     } else {
-      this.setState({fetchingStatus: 'failure'})
+      this.setState({fetchingStatus: apiStatusConstants.failure})
     }
   }
 
@@ -99,13 +109,16 @@ class Trending extends Component {
 
   renderStateWise = isDarkThemeActivated => {
     const {fetchingStatus} = this.state
-    if (fetchingStatus === 'loading') {
-      return this.renderLoading(isDarkThemeActivated)
+    switch (fetchingStatus) {
+      case apiStatusConstants.success:
+        return this.renderVideos(isDarkThemeActivated)
+      case apiStatusConstants.inProgress:
+        return this.renderLoading(isDarkThemeActivated)
+      case apiStatusConstants.failure:
+        return this.renderFailureDetails()
+      default:
+        return null
     }
-    if (fetchingStatus === 'success') {
-      return this.renderVideos(isDarkThemeActivated)
-    }
-    return this.renderFailureDetails()
   }
 
   render() {

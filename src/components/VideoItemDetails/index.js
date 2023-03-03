@@ -43,9 +43,16 @@ import './index.css'
 
 import NxtWatchContext from '../NxtWatchContext'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class VideoItemDetails extends Component {
   state = {
-    fetchingStatus: 'loading',
+    fetchingStatus: apiStatusConstants.initial,
     videoDetails: {},
     likedStatus: '',
     isSaved: false,
@@ -56,7 +63,7 @@ class VideoItemDetails extends Component {
   }
 
   getVideoItemDetails = async () => {
-    this.setState({fetchingStatus: 'loading'})
+    this.setState({fetchingStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
     const {match} = this.props
     const {params} = match
@@ -84,9 +91,12 @@ class VideoItemDetails extends Component {
         videoUrl: videoDetails.video_url,
         viewCount: videoDetails.view_count,
       }
-      this.setState({fetchingStatus: 'success', videoDetails: data})
+      this.setState({
+        fetchingStatus: apiStatusConstants.success,
+        videoDetails: data,
+      })
     } else {
-      this.setState({fetchingStatus: 'failure'})
+      this.setState({fetchingStatus: apiStatusConstants.failure})
     }
   }
 
@@ -212,19 +222,19 @@ class VideoItemDetails extends Component {
   renderStateWiseDetails = obj => {
     const {isDarkThemeActivated, onClickToSaveTheVideo} = obj
     const {fetchingStatus} = this.state
-    if (fetchingStatus === 'loading') {
-      return this.renderLoadingDetails(isDarkThemeActivated)
+    switch (fetchingStatus) {
+      case apiStatusConstants.success:
+        return this.renderVideoItemDetails({
+          isDarkThemeActivated,
+          onClickToSaveTheVideo,
+        })
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingDetails(isDarkThemeActivated)
+      case apiStatusConstants.failure:
+        return this.renderFailureDetails(isDarkThemeActivated)
+      default:
+        return null
     }
-    if (fetchingStatus === 'success') {
-      return this.renderVideoItemDetails({
-        isDarkThemeActivated,
-        onClickToSaveTheVideo,
-      })
-    }
-    if (fetchingStatus === 'failure') {
-      return this.renderFailureDetails(isDarkThemeActivated)
-    }
-    return null
   }
 
   onClickToLike = () => {

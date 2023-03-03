@@ -119,9 +119,14 @@ const Header = props => {
           history.replace('/login')
         }
 
+        const onChangeToHomeRoute = () => {
+          const {history} = props
+          history.push('/')
+        }
+
         return (
           <HeaderBgContainer isDarkThemeActivated={isDarkThemeActivated}>
-            <NxtWatchButton type="button">
+            <NxtWatchButton type="button" onClick={onChangeToHomeRoute}>
               <NxtWatchLogo src={nxtWatchLogoImgUrl} alt="website logo" />
             </NxtWatchButton>
 

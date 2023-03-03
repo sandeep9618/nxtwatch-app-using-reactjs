@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Switch, Route, withRouter} from 'react-router-dom'
+import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
 
 import './App.css'
 
@@ -8,6 +8,8 @@ import Home from './components/Home'
 import NxtWatchContext from './components/NxtWatchContext'
 import VideoItemDetails from './components/VideoItemDetails'
 import Trending from './components/Trending'
+import Gaming from './components/Gaming'
+import NotFound from './components/NotFound'
 
 class App extends Component {
   state = {
@@ -57,6 +59,9 @@ class App extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/videos/:id" component={VideoItemDetails} />
           <Route exact path="/trending" component={Trending} />
+          <Route exact path="/gaming" component={Gaming} />
+          <Route exact path="/not-found" component={NotFound} />
+          <Redirect to="/not-found" />
         </Switch>
       </NxtWatchContext.Provider>
     )
