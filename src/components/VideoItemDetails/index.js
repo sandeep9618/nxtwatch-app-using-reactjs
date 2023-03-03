@@ -8,6 +8,7 @@ import {BiLike, BiDislike, BiListPlus} from 'react-icons/bi'
 
 import Header from '../Header'
 import NavBar from '../NavBar'
+import FailureDetails from '../FailureDetails'
 
 import {
   VideoItemDetailsBgContainer,
@@ -31,15 +32,11 @@ import {
   SubScribersCount,
   DescriptionOfTheVideo,
   ReactVideoPlayerContainer,
-  FailureDetailsContainer,
-  FailureImg,
-  FailureHeading,
-  FailureDescription,
-  RetryButton,
   DescriptionOfTheVideoTwo,
   DisLikeContainer,
   DisLikePara,
   SavedPara,
+  FailureDetailsContainer,
 } from './styledComponents'
 
 import './index.css'
@@ -93,26 +90,11 @@ class VideoItemDetails extends Component {
     }
   }
 
-  renderFailureDetails = isDarkThemeActivated => {
-    const failureImgUrl = isDarkThemeActivated
-      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
-    return (
-      <FailureDetailsContainer>
-        <FailureImg src={failureImgUrl} alt="failure" />
-        <FailureHeading isDarkThemeActivated={isDarkThemeActivated}>
-          Oops! Something Went Wrong
-        </FailureHeading>
-        <FailureDescription isDarkThemeActivated={isDarkThemeActivated}>
-          We are having some trouble to complete your request. <br /> Please try
-          again.
-        </FailureDescription>
-        <RetryButton type="button" onClick={this.getVideoItemDetails}>
-          Retry
-        </RetryButton>
-      </FailureDetailsContainer>
-    )
-  }
+  renderFailureDetails = () => (
+    <FailureDetailsContainer>
+      <FailureDetails onReRender={this.getVideoItemDetails} />
+    </FailureDetailsContainer>
+  )
 
   renderLoadingDetails = isDarkThemeActivated => (
     <VideoItemDetailsLoaderContainer>
@@ -251,10 +233,15 @@ class VideoItemDetails extends Component {
   }
 
   render() {
+    const activeRouteNavoptionId = 'HOME'
     return (
       <NxtWatchContext.Consumer>
         {value => {
-          const {isDarkThemeActivated, onClickToSaveTheVideo} = value
+          const {
+            isDarkThemeActivated,
+            onClickToSaveTheVideo,
+            onChangeActiveNavOption,
+          } = value
           return (
             <VideoItemDetailsBgContainer
               isDarkThemeActivated={isDarkThemeActivated}
@@ -262,7 +249,10 @@ class VideoItemDetails extends Component {
             >
               <Header />
               <VideoItemDetailsContainer>
-                <NavBar />
+                <NavBar
+                  activeRouteNavoptionId={activeRouteNavoptionId}
+                  onChangeActiveNavOption={onChangeActiveNavOption}
+                />
                 {this.renderStateWiseDetails({
                   isDarkThemeActivated,
                   onClickToSaveTheVideo,

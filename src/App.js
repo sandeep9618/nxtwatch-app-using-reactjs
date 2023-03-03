@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, withRouter} from 'react-router-dom'
 
 import './App.css'
 
@@ -7,6 +7,7 @@ import Login from './components/Login'
 import Home from './components/Home'
 import NxtWatchContext from './components/NxtWatchContext'
 import VideoItemDetails from './components/VideoItemDetails'
+import Trending from './components/Trending'
 
 class App extends Component {
   state = {
@@ -39,8 +40,8 @@ class App extends Component {
   }
 
   render() {
-    const {isDarkThemeActivated, savedVideos, activeNavOption} = this.state
-    console.log(savedVideos)
+    const {isDarkThemeActivated, activeNavOption} = this.state
+
     return (
       <NxtWatchContext.Provider
         value={{
@@ -55,10 +56,11 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
           <Route exact path="/videos/:id" component={VideoItemDetails} />
+          <Route exact path="/trending" component={Trending} />
         </Switch>
       </NxtWatchContext.Provider>
     )
   }
 }
 
-export default App
+export default withRouter(App)

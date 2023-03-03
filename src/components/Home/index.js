@@ -148,15 +148,19 @@ class Home extends Component {
 
   render() {
     const {isShowPrimeDetails} = this.state
+    const activeRouteNavoptionId = 'HOME'
     return (
       <NxtWatchContext.Consumer>
         {value => {
-          const {isDarkThemeActivated} = value
+          const {isDarkThemeActivated, onChangeActiveNavOption} = value
           return (
             <HomeBgContainer data-testid="home">
               <Header />
               <HomeContainer isDarkThemeActivated={isDarkThemeActivated}>
-                <NavBar />
+                <NavBar
+                  activeRouteNavoptionId={activeRouteNavoptionId}
+                  onChangeActiveNavOption={onChangeActiveNavOption}
+                />
 
                 <InputContainerTwo>
                   <SearchInput

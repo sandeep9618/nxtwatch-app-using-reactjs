@@ -5,8 +5,8 @@ export const NavBarBgContainer = styled.div`
     display: none;
     width: 0px;
   }
-  width: 350px;
-  padding: 2%;
+  width: 300px;
+  padding: 20px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,7 @@ export const NavOption = styled.li`
   display: flex;
   padding-left: 0px;
   align-items: center;
+  width: 250px;
 `
 export const NavOptionText = styled.p`
   font-size: 14px;
@@ -59,7 +60,7 @@ export const NavButton = styled.button`
   display: flex;
   align-items: center;
   padding-left: 20px;
-  width: 90%;
+  width: 250px;
   border-radius: 6px;
   background-color: ${props =>
     backgroudColorOfActiveOption({

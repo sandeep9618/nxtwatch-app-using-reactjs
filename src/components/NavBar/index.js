@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {AiFillHome} from 'react-icons/ai'
 import {HiFire} from 'react-icons/hi'
 import {SiYoutubegaming} from 'react-icons/si'
@@ -78,6 +78,21 @@ const navOptions = [
 ]
 
 class NavBar extends Component {
+  componentDidMount() {
+    this.setActiveNavOptionAccordingToRoute()
+  }
+
+  // when you refresh the browser or search particular path the active nav option automatically active according to the browser path
+  // according to the active path in the browser, to convert the active nav option item =>>>>>>>>>>>>>>>>>>>>>>
+
+  setActiveNavOptionAccordingToRoute = () => {
+    const {activeRouteNavoptionId, onChangeActiveNavOption} = this.props
+    this.onChangeActiveRoute({
+      id: activeRouteNavoptionId,
+      onChangeActiveNavOption,
+    })
+  }
+
   onChangeActiveRoute = idAndOnChangeNavOptionFunction => {
     const {id, onChangeActiveNavOption} = idAndOnChangeNavOptionFunction
     onChangeActiveNavOption(id)
@@ -137,4 +152,4 @@ class NavBar extends Component {
     )
   }
 }
-export default NavBar
+export default withRouter(NavBar)
