@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
+import {Switch, withRouter, Redirect, Route} from 'react-router-dom'
 
 import './App.css'
 
@@ -10,6 +10,8 @@ import VideoItemDetails from './components/VideoItemDetails'
 import Trending from './components/Trending'
 import Gaming from './components/Gaming'
 import NotFound from './components/NotFound'
+import SavedVideos from './components/SavedVideos'
+import ProtectRoute from './components/ProtectRoute'
 
 class App extends Component {
   state = {
@@ -42,7 +44,7 @@ class App extends Component {
   }
 
   render() {
-    const {isDarkThemeActivated, activeNavOption} = this.state
+    const {isDarkThemeActivated, activeNavOption, savedVideos} = this.state
 
     return (
       <NxtWatchContext.Provider
@@ -52,15 +54,17 @@ class App extends Component {
           onClickToSaveTheVideo: this.onClickToSaveTheVideo,
           activeNavOption,
           onChangeActiveNavOption: this.onChangeActiveNavOption,
+          savedVideos,
         }}
       >
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/videos/:id" component={VideoItemDetails} />
-          <Route exact path="/trending" component={Trending} />
-          <Route exact path="/gaming" component={Gaming} />
-          <Route exact path="/not-found" component={NotFound} />
+          <ProtectRoute exact path="/" component={Home} />
+          <ProtectRoute exact path="/videos/:id" component={VideoItemDetails} />
+          <ProtectRoute exact path="/trending" component={Trending} />
+          <ProtectRoute exact path="/gaming" component={Gaming} />
+          <ProtectRoute exact path="/not-found" component={NotFound} />
+          <ProtectRoute exact path="/saved-videos" component={SavedVideos} />
           <Redirect to="/not-found" />
         </Switch>
       </NxtWatchContext.Provider>
