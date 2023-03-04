@@ -90,3 +90,25 @@ export const SocialMediaIcon = styled.img`
   height: 30px;
   margin-right: 10px;
 `
+
+const getColorOfIcon = obj => {
+  const {isActiveOption, isDarkThemeActivated} = obj
+  if (isActiveOption === true && isDarkThemeActivated === true) {
+    return '#ff0000'
+  }
+  if (isActiveOption === true && isDarkThemeActivated === false) {
+    return '#ff0000'
+  }
+  if (isActiveOption === false && isDarkThemeActivated === false) {
+    return '#000000'
+  }
+  return '#ffffff'
+}
+
+export const IconContainer = styled.div`
+  color: ${props =>
+    getColorOfIcon({
+      isActiveOption: props.isActiveOption,
+      isDarkThemeActivated: props.isDarkThemeActivated,
+    })} !important;
+`

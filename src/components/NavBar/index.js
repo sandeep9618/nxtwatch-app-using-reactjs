@@ -16,6 +16,7 @@ import {
   ContactUsDescription,
   SocialMediaIconsContainer,
   SocialMediaIcon,
+  IconContainer,
 } from './styledComponents'
 
 import './index.css'
@@ -45,7 +46,12 @@ const NavItem = props => {
           onClick={onChangeActiveItem}
           isDarkThemeActivated={isDarkThemeActivated}
         >
-          {icon}
+          <IconContainer
+            isActiveOption={isActiveOption}
+            isDarkThemeActivated={isDarkThemeActivated}
+          >
+            {icon}
+          </IconContainer>
           <NavOptionText isDarkThemeActivated={isDarkThemeActivated}>
             {displayText}
           </NavOptionText>
