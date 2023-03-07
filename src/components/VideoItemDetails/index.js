@@ -220,13 +220,14 @@ class VideoItemDetails extends Component {
   }
 
   renderStateWiseDetails = obj => {
-    const {isDarkThemeActivated, onClickToSaveTheVideo} = obj
+    const {isDarkThemeActivated, onClickToSaveTheVideo, savedVideos} = obj
     const {fetchingStatus} = this.state
     switch (fetchingStatus) {
       case apiStatusConstants.success:
         return this.renderVideoItemDetails({
           isDarkThemeActivated,
           onClickToSaveTheVideo,
+          savedVideos,
         })
       case apiStatusConstants.inProgress:
         return this.renderLoadingDetails(isDarkThemeActivated)
@@ -254,6 +255,7 @@ class VideoItemDetails extends Component {
             isDarkThemeActivated,
             onClickToSaveTheVideo,
             onChangeActiveNavOption,
+            savedVideos,
           } = value
           return (
             <VideoItemDetailsBgContainer
@@ -269,6 +271,7 @@ class VideoItemDetails extends Component {
                 {this.renderStateWiseDetails({
                   isDarkThemeActivated,
                   onClickToSaveTheVideo,
+                  savedVideos,
                 })}
               </VideoItemDetailsContainer>
             </VideoItemDetailsBgContainer>

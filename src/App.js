@@ -26,15 +26,23 @@ class App extends Component {
 
   onClickToSaveTheVideo = obj => {
     const {isSaved, videoDetailsObj} = obj
+    const {id} = videoDetailsObj
+    const {savedVideos} = this.state
+    const isAlreadySaved = savedVideos.some(i => i.id === id)
     if (isSaved === true) {
-      this.setState(prevState => ({
-        savedVideos: [...prevState.savedVideos, videoDetailsObj],
-      }))
-    } else {
-      const {id} = videoDetailsObj
-      const {savedVideos} = this.state
-      const newData = savedVideos.filter(i => i.id !== id)
-      this.setState({savedVideos: newData})
+      if (isAlreadySaved === false) {
+        this.setState(prevState => ({
+          savedVideos: [...prevState.savedVideos, videoDetailsObj],
+        }))
+      }
+    }
+    if (isSaved === false) {
+      if (savedVideos.length >= 1) {
+        const newData = savedVideos.filter(i => i.id !== id)
+        this.setState({savedVideos: newData})
+      } else {
+        this.setState({savedVideos})
+      }
     }
   }
 

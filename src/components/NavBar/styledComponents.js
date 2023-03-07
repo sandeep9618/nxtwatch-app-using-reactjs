@@ -32,7 +32,7 @@ export const NavOptionText = styled.p`
   font-size: 14px;
   font-weight: 700;
   margin-left: 20px;
-  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
+  color: ${props => (props.isDarkThemeActivated ? '#cccccc' : '#000000')};
 `
 const backgroudColorOfActiveOption = obj => {
   const {isDarkThemeActivated, isActiveOption} = obj
@@ -76,12 +76,12 @@ export const ContactUsContainer = styled.div`
 export const ContactUsHeading = styled.h1`
   font-size: 12px;
   font-weight: 700;
-  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
+  color: ${props => (props.isDarkThemeActivated ? '#e2e8f0' : '#000000')};
 `
 export const ContactUsDescription = styled.p`
   font-size: 13px;
   font-weight: 500;
-  color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
+  color: ${props => (props.isDarkThemeActivated ? '#e2e8f0' : '#000000')};
 `
 export const SocialMediaIconsContainer = styled.div`
   display: flex;
@@ -102,7 +102,7 @@ const getColorOfIcon = obj => {
   if (isActiveOption === false && isDarkThemeActivated === false) {
     return '#000000'
   }
-  return '#ffffff'
+  return '#cccccc'
 }
 
 export const IconContainer = styled.div`
