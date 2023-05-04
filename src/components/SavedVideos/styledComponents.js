@@ -45,5 +45,5 @@ export const SavedVideoItemsContainer = styled.ul`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `
