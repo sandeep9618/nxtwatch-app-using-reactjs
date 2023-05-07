@@ -11,7 +11,7 @@ export const LoginBgContainer = styled.div`
 `
 export const LoginContainer = styled.form`
   padding: 2%;
-  min-height: 63vh;
+  min-height: 68vh;
   display: flex;
   flex-direction: column;
   box-shadow: ${props =>
@@ -88,4 +88,19 @@ export const ErrorLoginMsg = styled.p`
   font-size: 12px;
   font-weight: 500;
   margin-top: 0px;
+`
+export const LoginCredintials = styled.p`
+  cursor: pointer;
+  border: 0px;
+  border-radius: 5px;
+  margin-top: 25px;
+  margin-bottom: 5px;
+  outline: none;
+  color: blue;
+  background-color: transparent;
+  text-align: end;
+  margin-bottom: 0px;
+  font-size: 12px;
+  margin-top: 0px;
+  font-weight: 300;
 `

@@ -1,8 +1,13 @@
 import {Redirect} from 'react-router-dom'
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import NxtWatchContext from '../NxtWatchContext'
 
+import Popup from 'reactjs-popup'
+
+import 'reactjs-popup/dist/index.css'
+
+import NxtWatchContext from '../NxtWatchContext'
+import './index.css'
 import {
   LoginBgContainer,
   LoginContainer,
@@ -15,6 +20,7 @@ import {
   ShowPasswordLabel,
   LoginButton,
   ErrorLoginMsg,
+  LoginCredintials,
 } from './styledComponents'
 
 class Login extends Component {
@@ -22,7 +28,7 @@ class Login extends Component {
     userNameInput: '',
     userPassInput: '',
     showPassword: false,
-    isHavingErrorLoginDetails: false,
+    isHavingErrorInLoginDetails: false,
     errorMsg: '',
   }
 
@@ -51,14 +57,17 @@ class Login extends Component {
     if (response.ok === true) {
       const jsonData = await response.json()
       const jwtToken = jsonData.jwt_token
+
+      Cookies.set('jwt_token', jwtToken, {expires: 30})
+
       const {history} = this.props
       history.replace('/')
-      Cookies.set('jwt_token', jwtToken, {expires: 30})
-      this.setState({isHavingErrorLoginDetails: false})
+
+      this.setState({isHavingErrorInLoginDetails: false})
     } else {
       const jsonData = await response.json()
       const errorMsg = jsonData.error_msg
-      this.setState({isHavingErrorLoginDetails: true, errorMsg})
+      this.setState({isHavingErrorInLoginDetails: true, errorMsg})
     }
   }
 
@@ -67,7 +76,7 @@ class Login extends Component {
       userNameInput,
       userPassInput,
       showPassword,
-      isHavingErrorLoginDetails,
+      isHavingErrorInLoginDetails,
       errorMsg,
     } = this.state
     const jwtToken = Cookies.get('jwt_token')
@@ -133,13 +142,28 @@ class Login extends Component {
                     Show Password
                   </ShowPasswordLabel>
                 </ShowPasswordContainer>
+
+                <Popup
+                  modal
+                  trigger={
+                    <LoginCredintials>login-creden... </LoginCredintials>
+                  }
+                  className="popup-content"
+                >
+                  <div className="login-cred-popup">
+                    <p className="credential">username: rahul</p>
+                    <p className="credential">password: rahul@2021</p>
+                  </div>
+                </Popup>
+
                 <LoginButton
                   type="submit"
                   isDarkThemeActivated={isDarkThemeActivated}
                 >
                   Login
                 </LoginButton>
-                {isHavingErrorLoginDetails && (
+
+                {isHavingErrorInLoginDetails && (
                   <ErrorLoginMsg>{errorMsg}</ErrorLoginMsg>
                 )}
               </LoginContainer>
