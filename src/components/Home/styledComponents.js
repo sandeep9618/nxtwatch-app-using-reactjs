@@ -85,6 +85,9 @@ export const VideosContainer = styled.ul`
   margin-left: 0px;
   overflow-y: auto;
   height: 100%;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 `
 export const BannerDetails = styled.div`
   display: flex;

@@ -9,6 +9,7 @@ import {BiLike, BiDislike, BiListPlus} from 'react-icons/bi'
 import Header from '../Header'
 import NavBar from '../NavBar'
 import FailureDetails from '../FailureDetails'
+import SuggestedVideoItems from '../SuggestedVideoItems'
 
 import {
   VideoItemDetailsBgContainer,
@@ -248,6 +249,8 @@ class VideoItemDetails extends Component {
 
   render() {
     const activeRouteNavoptionId = 'HOME'
+    const {videoDetails} = this.state
+
     return (
       <NxtWatchContext.Consumer>
         {value => {
@@ -273,6 +276,9 @@ class VideoItemDetails extends Component {
                   onClickToSaveTheVideo,
                   savedVideos,
                 })}
+                {videoDetails.id !== undefined && (
+                  <SuggestedVideoItems id={videoDetails.id} />
+                )}
               </VideoItemDetailsContainer>
             </VideoItemDetailsBgContainer>
           )

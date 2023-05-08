@@ -5,7 +5,7 @@ export const NavBarBgContainer = styled.div`
     display: none;
     width: 0px;
   }
-  width: 300px;
+  width: 18%;
   padding: 20px;
   padding-top: 20px;
   display: flex;
@@ -60,7 +60,7 @@ export const NavButton = styled.button`
   display: flex;
   align-items: center;
   padding-left: 20px;
-  width: 250px;
+  width: 80%;
   border-radius: 6px;
   background-color: ${props =>
     backgroudColorOfActiveOption({

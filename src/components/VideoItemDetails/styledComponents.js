@@ -20,14 +20,17 @@ export const VideoItemDetailsLoaderContainer = styled.div`
   width: 100%;
 `
 export const VideoPlayerContainer = styled.div`
-  width: 65%;
-  padding: 2%;
+  width: 58%;
+  padding: 1%;
   display: flex;
   flex-direction: column;
   height: 90vh;
   overflow-y: auto;
   @media screen and (max-width: 576px) {
     width: 100%;
+  }
+  ::-webkit-scrollbar {
+    width: 0;
   }
 `
 export const ReactVideoPlayerContainer = styled.div`
@@ -62,7 +65,8 @@ export const ViewsAndLikesContainer = styled.div`
 export const Views = styled.p`
   font-size: 12px;
   font-weight: 600;
-  color: #94a3b8;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#94a3b8' : '#000000'};
 `
 export const ViewsAndTimeContainer = styled.div`
   display: flex;
@@ -77,7 +81,8 @@ export const ViewsAndTimeContainer = styled.div`
 export const Time = styled.p`
   font-size: 12px;
   font-weight: 600;
-  color: #94a3b8;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#94a3b8' : '#000000'};
 `
 export const LikeAndSaveContainer = styled.div`
   display: flex;
