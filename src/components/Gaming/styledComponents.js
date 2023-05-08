@@ -37,6 +37,9 @@ export const GamingItems = styled.div`
   flex-wrap: wrap;
   height: 90vh;
   overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
   display: flex;
   justify-content: space-between;
   @media screen and (max-width: 576px) {
@@ -75,6 +78,7 @@ export const GamingVideosBgContainer = styled.div`
   height: 90vh;
   display: flex;
   flex-direction: column;
+  width: 82%;
 `
 export const TrendingCard = styled.div`
   display: flex;

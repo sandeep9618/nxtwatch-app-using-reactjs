@@ -8,7 +8,7 @@
     height: 25vh !important ;
   }
 }
-@media (min-width: 577px) {
+@media screen and (min-width: 577px) {
   .react-player {
     width: 100% !important;
     height: 450px !important;

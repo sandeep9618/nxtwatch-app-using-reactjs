@@ -13,6 +13,7 @@ export const NavBarBgContainer = styled.div`
   justify-content: space-between;
   height: 90vh;
   margin-top: 0px;
+
   background-color: ${props =>
     props.isDarkThemeActivated ? '#231f20' : '#ffffff'};
 `
@@ -26,15 +27,15 @@ export const NavOption = styled.li`
   display: flex;
   padding-left: 0px;
   align-items: center;
-  width: 250px;
+  width: 100%;
 `
 export const NavOptionText = styled.p`
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 500;
   margin-left: 20px;
   color: ${props => (props.isDarkThemeActivated ? '#cccccc' : '#000000')};
 `
-const backgroudColorOfActiveOption = obj => {
+const backgroundColorOfActiveOption = obj => {
   const {isDarkThemeActivated, isActiveOption} = obj
   if (isDarkThemeActivated && isActiveOption) {
     return '#383838'
@@ -60,10 +61,11 @@ export const NavButton = styled.button`
   display: flex;
   align-items: center;
   padding-left: 20px;
-  width: 80%;
+  width: 95%;
   border-radius: 6px;
+
   background-color: ${props =>
-    backgroudColorOfActiveOption({
+    backgroundColorOfActiveOption({
       isDarkThemeActivated: props.isDarkThemeActivated,
       isActiveOption: props.isActiveOption,
     })};
