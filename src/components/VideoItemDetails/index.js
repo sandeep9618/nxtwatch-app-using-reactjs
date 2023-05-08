@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player'
 import Loader from 'react-loader-spinner'
 import {BsDot} from 'react-icons/bs'
 import {BiLike, BiDislike, BiListPlus} from 'react-icons/bi'
+import {withRouter} from 'react-router-dom'
 
 import Header from '../Header'
 import NavBar from '../NavBar'
@@ -57,6 +58,7 @@ class VideoItemDetails extends Component {
     videoDetails: {},
     likedStatus: '',
     isSaved: false,
+    isShowSuggestedVideos: false,
   }
 
   componentDidMount() {
@@ -95,10 +97,21 @@ class VideoItemDetails extends Component {
       this.setState({
         fetchingStatus: apiStatusConstants.success,
         videoDetails: data,
+        isShowSuggestedVideos: true,
       })
     } else {
       this.setState({fetchingStatus: apiStatusConstants.failure})
     }
+  }
+
+  suggestedVideoItemTriggered = () => {
+    this.setState(
+      {
+        fetchingStatus: apiStatusConstants.initial,
+        isShowSuggestedVideos: false,
+      },
+      this.getVideoItemDetails,
+    )
   }
 
   renderFailureDetails = () => (
@@ -249,7 +262,7 @@ class VideoItemDetails extends Component {
 
   render() {
     const activeRouteNavoptionId = 'HOME'
-    const {videoDetails} = this.state
+    const {videoDetails, isShowSuggestedVideos} = this.state
 
     return (
       <NxtWatchContext.Consumer>
@@ -276,8 +289,12 @@ class VideoItemDetails extends Component {
                   onClickToSaveTheVideo,
                   savedVideos,
                 })}
-                {videoDetails.id !== undefined && (
-                  <SuggestedVideoItems id={videoDetails.id} />
+                {isShowSuggestedVideos === true && (
+                  <SuggestedVideoItems
+                    id={videoDetails.id}
+                    isDarkThemeActivated={isDarkThemeActivated}
+                    triggerFunction={this.suggestedVideoItemTriggered}
+                  />
                 )}
               </VideoItemDetailsContainer>
             </VideoItemDetailsBgContainer>
@@ -288,4 +305,4 @@ class VideoItemDetails extends Component {
   }
 }
 
-export default VideoItemDetails
+export default withRouter(VideoItemDetails)

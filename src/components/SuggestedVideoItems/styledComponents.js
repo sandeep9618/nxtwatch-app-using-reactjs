@@ -7,6 +7,10 @@ export const BgContainer = styled.div`
   ::-webkit-scrollbar {
     width: 0;
   }
+
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
 `
 export const VideItemsContiner = styled.ul`
   padding-left: 0px;
@@ -35,8 +39,24 @@ export const Title = styled.p`
   font-weight: 600;
   margin-top: 0px;
   margin-bottom: 5px;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#dae3e2' : '#000000'};
 `
 export const ChannelName = styled.p`
   font-size: 10px;
   margin-top: 0px;
+  margin-bottom: 0px;
+  color: ${props =>
+    props.isDarkThemeActivated === true ? '#99adaa' : '#000000'};
+`
+export const Views = styled.p`
+  font-size: 10px;
+  font-weight: 500;
+  color: #778c89;
+`
+
+export const Time = styled.p`
+  font-size: 10px;
+  font-weight: 500;
+  color: #778c89;
 `
