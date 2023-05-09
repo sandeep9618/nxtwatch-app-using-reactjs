@@ -183,7 +183,7 @@ export const NavOptionText = styled.p`
   margin-left: 20px;
   color: ${props => (props.isDarkThemeActivated ? '#ffffff' : '#000000')};
 `
-const backgroudColorOfActiveOption = obj => {
+const backgroundColorOfActiveOption = obj => {
   const {isDarkThemeActivated, isActiveOption} = obj
   if (isDarkThemeActivated && isActiveOption) {
     return '#383838'
@@ -211,7 +211,7 @@ export const NavButton = styled.button`
   width: 90%;
   border-radius: 6px;
   background-color: ${props =>
-    backgroudColorOfActiveOption({
+    backgroundColorOfActiveOption({
       isDarkThemeActivated: props.isDarkThemeActivated,
       isActiveOption: props.isActiveOption,
     })};

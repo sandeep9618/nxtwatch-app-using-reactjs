@@ -4,9 +4,9 @@ export const HomeVideoItemContainer = styled.li`
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  width: 230px;
-  margin-right: 12px;
+  width: 100%;
   cursor: pointer;
+
   @media screen and (max-width: 576px) {
     width: 100%;
     padding: 4%;
@@ -15,12 +15,15 @@ export const HomeVideoItemContainer = styled.li`
   }
 `
 export const ThumbnailImg = styled.img`
-  height: 125px;
+  height: 150px;
   border-radius: 5px;
   width: 100%;
   margin-bottom: 0px;
   @media screen and (max-width: 576px) {
     height: 100%;
+  }
+  @media screen and (min-width: 577px) and (max-width: 766px) {
+    height: 125px;
   }
 `
 export const SubscribeLogoAndDescriptionContainer = styled.div`

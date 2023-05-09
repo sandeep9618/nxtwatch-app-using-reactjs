@@ -9,7 +9,7 @@ export const VideosAndBannerContainer = styled.div`
   margin: 0px;
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 82%;
   height: 90vh;
   overflow-y: auto;
   background-color: ${props =>
@@ -82,6 +82,7 @@ export const VideosContainer = styled.ul`
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin-left: 0px;
   overflow-y: auto;
   height: 100%;

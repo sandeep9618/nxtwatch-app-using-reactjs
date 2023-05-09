@@ -30,9 +30,9 @@ export const NavOption = styled.li`
   width: 100%;
 `
 export const NavOptionText = styled.p`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  margin-left: 20px;
+  margin-left: 15px;
   color: ${props => (props.isDarkThemeActivated ? '#cccccc' : '#000000')};
 `
 const backgroundColorOfActiveOption = obj => {
